@@ -2,6 +2,8 @@ const express = require('express');
 
 const connectBD = require('./config/db')
 const app = express();
+
+app.use(express.json());
 connectBD();
 
 app.use('/api',require('./Router/auth'));
