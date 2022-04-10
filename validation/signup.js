@@ -6,13 +6,13 @@ exports.SignupValidation = [
     body('role').notEmpty(),
     body('password').isLength({ min: 5 }).withMessage("password must be more than 5"),
 
-(req,res)=>{
+(req,res,next)=>{
 
     const errors = validationResult(req);
 
     if(!errors.isEmpty()){
         return res.status(400).json({ errors: errors.array() });
     }
+    next()
 }
-
 ]
