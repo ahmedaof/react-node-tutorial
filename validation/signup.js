@@ -16,3 +16,17 @@ exports.SignupValidation = [
     next()
 }
 ]
+exports.SigninValidation = [
+    body('email').isEmail().withMessage("you must enter valid email"),
+    body('password').isLength({ min: 5 }).withMessage("password must be more than 5"),
+
+(req,res,next)=>{
+
+    const errors = validationResult(req);
+
+    if(!errors.isEmpty()){
+        return res.status(400).json({ errors: errors.array() });
+    }
+    next()
+}
+]

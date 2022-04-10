@@ -43,3 +43,37 @@ exports.Signup = async (req,res)=>{
      return res.status(500).send("server error")
   }
 }
+exports.Signin = async (req,res)=>{
+    const {email , password} = req.body
+  try {
+      // check user 
+      let user =await User.findOne({email});
+
+      if(!user){
+          return res.status(400).json({error:[{msg:"user not exist"}]})
+      }
+
+      const isMatch =await bcrypt.compare(password , user.password);
+
+      if(!isMatch){
+        return res.status(400).json({error:[{msg:"not match with credintials"}]})
+      }
+
+      const payload = {
+          user:{
+              id: user.id
+          }
+      }
+      jwt.sign(payload,
+        process.env.JWTSECRET,
+        {expiresIn:3600}
+        ,(err,token)=>{
+          if(err) throw err ;
+          res.json({token})
+      }
+      )
+  } catch (error) {
+      console.log(error);
+     return res.status(500).send("server error")
+  }
+}

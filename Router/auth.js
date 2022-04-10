@@ -1,12 +1,13 @@
 const express = require('express');
-const { Signup } = require('../controller/auth');
+const { Signup , Signin } = require('../controller/auth');
 const auth = require('../middleware/auth');
 const User = require('../models/User');
-const { SignupValidation } = require('../validation/signup');
+const { SignupValidation , SigninValidation } = require('../validation/signup');
 
 const AuthRouter = express.Router();
 
 AuthRouter.post('/signup',SignupValidation,Signup);
+AuthRouter.post('/signin',SigninValidation,Signin);
 AuthRouter.get('/me',auth , async (req,res)=>{
 
    try {
