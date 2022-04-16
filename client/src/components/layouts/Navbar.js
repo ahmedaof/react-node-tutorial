@@ -12,10 +12,10 @@ export const Navbar = () => {
     const GestLink = (
         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
         <li className="nav-item">
-          <NavLink activeClassName="selected" className="nav-link " aria-current="page" to="/signin">login</NavLink>
+          <NavLink className={({ isActive }) => isActive? "nav-link  active": 'nav-link '} aria-current="page" to="/signin">login</NavLink>
         </li>
         <li className="nav-item">
-          <NavLink activeClassName="selected" className="nav-link" to="/signup">register</NavLink>
+          <NavLink className={({ isActive }) => isActive? "nav-link  active": 'nav-link '}  to="/signup">register</NavLink>
         </li>
       </ul>
     )
@@ -27,7 +27,7 @@ export const Navbar = () => {
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
           <li className="nav-item">
-            <a className="nav-link " aria-current="page" href="#">Home</a>
+            <NavLink className={({ isActive }) => isActive? "nav-link  active": 'nav-link '} aria-current="page" to="/">Home</NavLink>
           </li>
           { GestLink }
         </ul>
