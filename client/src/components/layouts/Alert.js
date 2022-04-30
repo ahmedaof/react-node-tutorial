@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
       alerts.map(alert=>(
           <div key={alert.id}
           className='container'>
-          <p className={`btn-${alert.alertType}`} >{alert.msg}</p>
+          <p className={`alert alert-${alert.alertType}`} >{alert.msg}</p>
           </div>
       ))
   )

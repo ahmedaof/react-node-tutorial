@@ -2,7 +2,7 @@
 import axios from 'axios'
 import setAlert from './setAlert'
 
-const signup = ( name , eamil , password ,role ) =>async dispatch => {
+const signup = ({ name , eamil , password ,role }) =>async dispatch => {
 
     const config = {
         headers:{
@@ -22,9 +22,8 @@ const signup = ( name , eamil , password ,role ) =>async dispatch => {
     } catch (error) {
         const errors = error.response.data.errors
         if(errors){
-            errors.forEach(error => {
-                error.dispatch(setAlert(error.msg , 'danger'))
-            });
+            errors.forEach(error =>dispatch(setAlert(error.msg , 'danger'))
+            );
         }
         dispatch({
             type:'REGISTER_FAIL'
