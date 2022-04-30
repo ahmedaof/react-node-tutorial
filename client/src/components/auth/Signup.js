@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux';
 import setAlert from '../../action/setAlert'
+import signup from '../../action/signup'
 
- const Signup = ({setAlert}) => {
+ const Signup = ({setAlert , signup}) => {
 
 
   const [formData , setFormData ] = useState({
@@ -24,7 +25,7 @@ import setAlert from '../../action/setAlert'
     if(password !== password2){
       setAlert("password not match" , 'danger')
     }else{
-      console.log(formData);
+      signup(formData);
     }
   }
   return (
@@ -63,4 +64,4 @@ import setAlert from '../../action/setAlert'
   )
 }
 
-export default connect(null ,{setAlert})(Signup)
+export default connect(null ,{setAlert,signup})(Signup)
