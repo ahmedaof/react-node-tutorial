@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import setAlert from '../../action/setAlert'
 import signup from '../../action/signup'
 
- const Signup = ({setAlert , signup}) => {
+ const Signup = () => {
 
+  const dispatch = useDispatch();
 
   const [formData , setFormData ] = useState({
     formData:{
@@ -23,9 +24,9 @@ import signup from '../../action/signup'
   const onSubmit = e =>{
     e.preventDefault();
     if(password !== password2){
-      setAlert("password not match" , 'danger')
+      dispatch(setAlert("password not match" , 'danger'))
     }else{
-      signup(formData);
+      dispatch(signup(formData));
     }
   }
   return (
@@ -64,4 +65,4 @@ import signup from '../../action/signup'
   )
 }
 
-export default connect(null ,{setAlert,signup})(Signup)
+export default Signup

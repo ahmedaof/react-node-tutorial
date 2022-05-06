@@ -1,6 +1,7 @@
 import React from 'react'
-import { connect } from 'react-redux'
- const Alert = ({alerts}) => {
+import { useSelector } from 'react-redux'
+ const Alert = () => {
+     const alerts = useSelector(state =>state.alert);
   return (
       alerts.length > 0 && alerts !==null &&
       alerts.map(alert=>(
@@ -12,9 +13,9 @@ import { connect } from 'react-redux'
   )
 }
 
- const mapStateToProps = state => ({
+//  const mapStateToProps = state => ({
 
-        alerts: state.alert
+//         alerts: state.alert
     
-})
-export default connect(mapStateToProps)(Alert)
+// })
+export default Alert ;

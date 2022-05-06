@@ -2,7 +2,7 @@
 import axios from 'axios'
 import setAlert from './setAlert'
 
-const signup = ({ name , eamil , password ,role }) =>async dispatch => {
+const signup = ({ name , email , password ,role }) =>async dispatch => {
 
     const config = {
         headers:{
@@ -11,7 +11,7 @@ const signup = ({ name , eamil , password ,role }) =>async dispatch => {
         }
     }
      
-    const body = JSON.stringify({name , eamil , password ,role})
+    const body = JSON.stringify({name , email , password ,role})
 
     try {
         const res = await axios.post("http://localhost:5000/api/signup" , body , config)
