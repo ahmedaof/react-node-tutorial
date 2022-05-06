@@ -1,19 +1,29 @@
 
+import { createSlice } from "@reduxjs/toolkit"
+
 const initialState = []
 
-const alert = (state = initialState , action) =>{
-const {type,payload} = action ;
 
-switch(type){
-    case 'SET_ALERT':
-        return [...state,payload];
-    case 'REMOVE_ALERT':
-        return state.filter(alert => alert.id !== payload);
+export const alertSlice = createSlice({
+    name: 'alert',
+    initialState,
+    reducers:[]
+})
 
-        default:
+export default alertSlice.reducer
+// const alert = (state = initialState , action) =>{
+// const {type,payload} = action ;
 
-        return state
-}
-}
+// switch(type){
+//     case 'SET_ALERT':
+//         return [...state,payload];
+//     case 'REMOVE_ALERT':
+//         return state.filter(alert => alert.id !== payload);
 
-export default alert
+//         default:
+
+//         return state
+// }
+// }
+
+// export default alert
