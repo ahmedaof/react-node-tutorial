@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux';
 import setAlert from '../../action/setAlert'
-import signup from '../../action/signup'
+import {signup} from '../../reducers/auth'
 
  const Signup = () => {
 

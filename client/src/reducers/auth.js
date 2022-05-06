@@ -1,6 +1,34 @@
 
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice ,createAsyncThunk} from "@reduxjs/toolkit"
 
+import axios from "axios"
+export const signup  = createAsyncThunk('Signup',async ({ name , email , password ,role },ThunkApi)=>{
+
+    const config = {
+        headers:{
+            Accept:'application/json',
+            'Content-Type': 'application/json'
+        }
+    }
+     
+    const body = JSON.stringify({name , email , password ,role})
+
+    const {rejectWithValue} = ThunkApi
+
+    try {
+        const res = await axios.post("http://localhost:5000/api/signup" , body , config)
+
+        return res.data
+
+    } catch (error) {
+        const errors = error.response.data.errors
+        if(errors){
+          return rejectWithValue(errors)
+        }
+
+    }
+
+})
 
 const initialState = {
     token:localStorage.getItem('token'),
@@ -12,7 +40,22 @@ const initialState = {
 export const authSlice = createSlice({
     name: 'Signup',
     initialState,
-    reducers:[]
+    extraReducers:{
+        [signup.pending]:(state,action) =>{
+            state.loading = true;
+            state.isAuthenticated = false
+        },
+        [signup.fulfilled]:(state,action) =>{
+            localStorage.setItem('token',action.payload.token);
+            state.loading = false;
+            state.isAuthenticated = true
+        },
+        [signup.rejected]:(state,action) =>{
+            state.loading = false;
+            state.isAuthenticated = false
+            localStorage.removeItem('token');
+        },
+    }
 })
 
 export default authSlice.reducer
