@@ -2,6 +2,7 @@
 import { createSlice ,createAsyncThunk} from "@reduxjs/toolkit"
 
 import axios from "axios"
+import { setAlert } from "./alert"
 export const signup  = createAsyncThunk('Signup',async ({ name , email , password ,role },ThunkApi)=>{
 
     const config = {
@@ -13,7 +14,7 @@ export const signup  = createAsyncThunk('Signup',async ({ name , email , passwor
      
     const body = JSON.stringify({name , email , password ,role})
 
-    const {rejectWithValue} = ThunkApi
+    const {rejectWithValue , dispatch} = ThunkApi
 
     try {
         const res = await axios.post("http://localhost:5000/api/signup" , body , config)
@@ -23,6 +24,7 @@ export const signup  = createAsyncThunk('Signup',async ({ name , email , passwor
     } catch (error) {
         const errors = error.response.data.errors
         if(errors){
+            dispatch(setAlert(errors,'danger'))
           return rejectWithValue(errors)
         }
 
