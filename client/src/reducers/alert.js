@@ -1,13 +1,23 @@
 
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice , createAsyncThunk } from "@reduxjs/toolkit"
 
-const initialState = []
+export const setAlert  = createAsyncThunk('SetAlert',async ([msg,alertType],ThunkApi)=>{
+    return {msg , alertType}
+})
+
+
+const initialState = {msg:null , alertType:null}
 
 
 export const alertSlice = createSlice({
     name: 'alert',
     initialState,
-    reducers:[]
+    extraReducers:{
+        [setAlert.fulfilled]:(state,action) =>{
+            state.msg = action.payload.msg,
+            state.alertType = action.payload.alertType
+        }
+    },
 })
 
 export default alertSlice.reducer
