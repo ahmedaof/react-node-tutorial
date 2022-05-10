@@ -3,11 +3,11 @@ import { useSelector } from 'react-redux'
  const Alert = () => {
      const alerts = useSelector(state =>state.alert);
   return (
-      alerts.length > 0 && alerts !==null &&
-      alerts.map(alert=>(
-          <div key={alert.id}
+    alerts.msg && alerts.msg.length > 0 && alerts.msg !==null &&
+      alerts.msg.map(alert=>(
+          <div
           className='container'>
-          <p className={`alert alert-${alert.alertType}`} >{alert.msg}</p>
+          <p className={`alert alert-${alerts.alertType}`} >{alert.msg}</p>
           </div>
       ))
   )

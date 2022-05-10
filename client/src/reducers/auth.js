@@ -24,7 +24,11 @@ export const signup  = createAsyncThunk('Signup',async ({ name , email , passwor
     } catch (error) {
         const errors = error.response.data.errors
         if(errors){
-            dispatch(setAlert([errors , 'danger']))
+            dispatch(setAlert([errors,'danger'])).then(() =>{
+              setTimeout(() => {
+                dispatch(setAlert(['','']))
+              }, 3000);
+            })
           return rejectWithValue(errors)
         }
 
