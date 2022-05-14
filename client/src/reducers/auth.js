@@ -36,6 +36,38 @@ export const signup  = createAsyncThunk('Signup',async ({ name , email , passwor
     }
 
 })
+export const signin  = createAsyncThunk('Signin',async ({email , password  },ThunkApi)=>{
+
+    const config = {
+        headers:{
+            Accept:'application/json',
+            'Content-Type': 'application/json'
+        }
+    }
+     
+    const body = JSON.stringify({  email , password })
+
+    const {rejectWithValue , dispatch} = ThunkApi
+
+    try {
+        const res = await axios.post("/api/signin" , body , config)
+
+        return res.data
+
+    } catch (error) {
+        const errors = error.response.data.errors
+        if(errors){
+            dispatch(setAlert([errors,'danger'])).then(() =>{
+              setTimeout(() => {
+                dispatch(setAlert(['','']))
+              }, 3000);
+            })
+          return rejectWithValue(errors)
+        }
+
+    }
+
+})
 export const loadUser  = createAsyncThunk('LoadUser',async (_,ThunkApi)=>{
  
     if(localStorage.token){
@@ -75,7 +107,7 @@ const initialState = {
 
 
 export const authSlice = createSlice({
-    name: 'Signup',
+    name: 'Auth',
     initialState,
     extraReducers:{
         [signup.pending]:(state,action) =>{
@@ -88,6 +120,16 @@ export const authSlice = createSlice({
             state.isAuthenticated = true
         },
         [signup.rejected]:(state,action) =>{
+            state.loading = false;
+            state.isAuthenticated = false
+            localStorage.removeItem('token');
+        },
+        [signin.fulfilled]:(state,action) =>{
+            localStorage.setItem('token',action.payload.token);
+            state.loading = false;
+            state.isAuthenticated = true
+        },
+        [signin.rejected]:(state,action) =>{
             state.loading = false;
             state.isAuthenticated = false
             localStorage.removeItem('token');

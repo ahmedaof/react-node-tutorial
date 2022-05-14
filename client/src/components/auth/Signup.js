@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 import setAlert from '../../action/setAlert'
 import {signup} from '../../reducers/auth'
 
  const Signup = () => {
+  const isAuthenticated = useSelector(state => state.Signup.isAuthenticated)
 
   const dispatch = useDispatch();
 
@@ -29,6 +31,9 @@ import {signup} from '../../reducers/auth'
       dispatch(signup(formData));
     }
   }
+  if(isAuthenticated){
+    return   <Navigate to="/dashboard" />
+   }
   return (
     <div className='container'>
     <form className='mt-5' onSubmit={e=>onSubmit(e)}>

@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux'
 import { Signin } from './components/auth/Signin'
 import  Signup  from './components/auth/Signup'
 import { Home } from './components/Home'
+import  {Dashboard}  from './components/Dashboard'
 import Alert from './components/layouts/Alert'
 import { Navbar } from './components/layouts/Navbar'
 import { loadUser } from './reducers/auth'
@@ -23,6 +24,7 @@ export const Rout = () => {
             <Route path='/' element={<Home />}/>
             <Route path='/signin' element = {<Signin />} />
             <Route path='/signup' element = {<Signup />} />
+            <Route path='/dashboard' element = {<Dashboard />} />
         </Routes>
     </Router>
   )
