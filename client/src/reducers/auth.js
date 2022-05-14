@@ -2,6 +2,7 @@
 import { createSlice ,createAsyncThunk} from "@reduxjs/toolkit"
 
 import axios from "axios"
+import SetAuthToken from "../Util/SetAuthToken"
 import { setAlert } from "./alert"
 export const signup  = createAsyncThunk('Signup',async ({ name , email , password ,role },ThunkApi)=>{
 
@@ -17,7 +18,7 @@ export const signup  = createAsyncThunk('Signup',async ({ name , email , passwor
     const {rejectWithValue , dispatch} = ThunkApi
 
     try {
-        const res = await axios.post("http://localhost:5000/api/signup" , body , config)
+        const res = await axios.post("/api/signup" , body , config)
 
         return res.data
 
@@ -36,15 +37,19 @@ export const signup  = createAsyncThunk('Signup',async ({ name , email , passwor
 
 })
 export const loadUser  = createAsyncThunk('LoadUser',async (_,ThunkApi)=>{
-
+ 
+    if(localStorage.token){
+        SetAuthToken(localStorage.token);
+    }
      
 
     const {rejectWithValue , dispatch} = ThunkApi
 
     try {
-        const res = await axios.get("http://localhost:5000/api/me")
-
-        return res.data
+        const res = await axios.get("/api/me")
+ 
+        const user = res.data
+        return {user}
 
     } catch (error) {
         const errors = error.response.data.errors
@@ -64,7 +69,8 @@ export const loadUser  = createAsyncThunk('LoadUser',async (_,ThunkApi)=>{
 const initialState = {
     token:localStorage.getItem('token'),
     isAuthenticated : false,
-    loading:true
+    loading:true,
+    user:null,
 }
 
 
@@ -87,9 +93,9 @@ export const authSlice = createSlice({
             localStorage.removeItem('token');
         },
         [loadUser.fulfilled]:(state,action) =>{
-            console.log(action.payload);
             state.loading = false;
             state.isAuthenticated = true
+            state.user = action.payload.user
         },
         [loadUser.rejected]:(state,action) =>{
             state.loading = false;
