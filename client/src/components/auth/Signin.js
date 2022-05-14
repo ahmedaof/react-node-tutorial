@@ -4,7 +4,7 @@ import { Navigate } from 'react-router-dom';
 import {signin} from '../../reducers/auth'
 
  export const Signin = () => {
-  const isAuthenticated = useSelector(state => state.Signup.isAuthenticated)
+  const isAuthenticated = useSelector(state => state.Auth.isAuthenticated)
 
   const dispatch = useDispatch();
 

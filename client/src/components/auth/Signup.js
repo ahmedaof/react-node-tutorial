@@ -5,7 +5,7 @@ import setAlert from '../../action/setAlert'
 import {signup} from '../../reducers/auth'
 
  const Signup = () => {
-  const isAuthenticated = useSelector(state => state.Signup.isAuthenticated)
+  const isAuthenticated = useSelector(state => state.Auth.isAuthenticated)
 
   const dispatch = useDispatch();
 

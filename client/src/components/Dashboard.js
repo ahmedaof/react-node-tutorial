@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { Navigate } from 'react-router-dom'
 
 export const Dashboard = () => {
-    const isAuthenticated = useSelector(state => state.Signup.isAuthenticated)
+    const isAuthenticated = useSelector(state => state.Auth.isAuthenticated)
     if(!isAuthenticated){
      return   <Navigate to="/signin" />
     }
