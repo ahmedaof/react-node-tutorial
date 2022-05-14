@@ -1,12 +1,19 @@
-import React from 'react'
+import { use } from 'bcrypt/promises'
+import React, { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
  import {BrowserRouter as Router , Routes,Route} from 'react-router-dom'
 import { Signin } from './components/auth/Signin'
 import  Signup  from './components/auth/Signup'
 import { Home } from './components/Home'
 import Alert from './components/layouts/Alert'
 import { Navbar } from './components/layouts/Navbar'
+import { loadUser } from './reducers/auth'
 
 export const Rout = () => {
+  const dispatch = useDispatch()
+  useEffect(()=>{
+    dispatch(loadUser())
+  },[])
   return (
     <Router>
     <Navbar />

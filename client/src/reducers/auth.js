@@ -35,6 +35,31 @@ export const signup  = createAsyncThunk('Signup',async ({ name , email , passwor
     }
 
 })
+export const loadUser  = createAsyncThunk('LoadUser',async (_,ThunkApi)=>{
+
+     
+
+    const {rejectWithValue , dispatch} = ThunkApi
+
+    try {
+        const res = await axios.get("http://localhost:5000/api/me")
+
+        return res.data
+
+    } catch (error) {
+        const errors = error.response.data.errors
+        if(errors){
+            dispatch(setAlert([errors,'danger'])).then(() =>{
+              setTimeout(() => {
+                dispatch(setAlert(['','']))
+              }, 3000);
+            })
+          return rejectWithValue(errors)
+        }
+
+    }
+
+})
 
 const initialState = {
     token:localStorage.getItem('token'),
@@ -57,6 +82,16 @@ export const authSlice = createSlice({
             state.isAuthenticated = true
         },
         [signup.rejected]:(state,action) =>{
+            state.loading = false;
+            state.isAuthenticated = false
+            localStorage.removeItem('token');
+        },
+        [loadUser.fulfilled]:(state,action) =>{
+            console.log(action.payload);
+            state.loading = false;
+            state.isAuthenticated = true
+        },
+        [loadUser.rejected]:(state,action) =>{
             state.loading = false;
             state.isAuthenticated = false
             localStorage.removeItem('token');
