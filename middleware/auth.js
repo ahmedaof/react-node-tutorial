@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
+const User = require('../models/User');
 
-module.exports = function(req,res,next){
+exports.isAuth = function(req,res,next){
 
     const token = req.header('token');
 
@@ -16,4 +17,14 @@ module.exports = function(req,res,next){
         res.status(401).json({msg: 'token isnot verified'})
     }
     next()
+}
+exports.isAdmin = function(req,res,next){
+
+     User.findById(req.user.id).exec((err,user)=>{
+         if(user.role == 0){
+           res.status(403).json({msg:'invalid role access denied it\'s for admin only'});
+       }
+    })
+
+    next();
 }

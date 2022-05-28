@@ -77,3 +77,14 @@ exports.Signin = async (req,res)=>{
      return res.status(500).send("server error")
   }
 }
+
+exports.LoadUser= async (req,res)=>{
+
+    try {
+     const user =await User.findById(req.user.id).select('-password');
+     res.status(200).json(user) 
+    } catch (error) {
+     console.log(error);
+     res.status(500).json({msg: 'server error'})
+    }
+ }
