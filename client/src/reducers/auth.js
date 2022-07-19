@@ -18,7 +18,7 @@ export const signup  = createAsyncThunk('Signup',async ({ name , email , passwor
     const {rejectWithValue , dispatch} = ThunkApi
 
     try {
-        const res = await axios.post("/api/signup" , body , config)
+        const res = await axios.post("http://localhost:5000/api/signup" , body , config)
 
         return res.data
 
@@ -50,7 +50,7 @@ export const signin  = createAsyncThunk('Signin',async ({email , password  },Thu
     const {rejectWithValue , dispatch} = ThunkApi
 
     try {
-        const res = await axios.post("/api/signin" , body , config)
+        const res = await axios.post("http://localhost:5000/api/signin" , body , config)
 
         return res.data
 
@@ -78,7 +78,7 @@ export const loadUser  = createAsyncThunk('LoadUser',async (_,ThunkApi)=>{
     const {rejectWithValue , dispatch} = ThunkApi
 
     try {
-        const res = await axios.get("/api/me")
+        const res = await axios.get("http://localhost:5000/api/me")
  
         const user = res.data
         return {user}
